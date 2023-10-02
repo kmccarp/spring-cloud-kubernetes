@@ -74,7 +74,7 @@ class KubernetesInformerReactiveDiscoveryClientAutoConfigurationTests {
 
 		ReactiveCompositeDiscoveryClient composite = (ReactiveCompositeDiscoveryClient) this.discoveryClient;
 		assertThat(composite.getDiscoveryClients().stream()
-				.anyMatch(dc -> dc instanceof KubernetesInformerReactiveDiscoveryClient)).isTrue();
+				.anyMatch(KubernetesInformerReactiveDiscoveryClient.class::isInstance)).isTrue();
 	}
 
 	@SpringBootApplication

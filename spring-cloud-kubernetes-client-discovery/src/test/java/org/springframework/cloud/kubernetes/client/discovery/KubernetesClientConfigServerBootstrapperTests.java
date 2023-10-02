@@ -82,7 +82,7 @@ class KubernetesClientConfigServerBootstrapperTests {
 		wireMockServer.start();
 		WireMock.configureFor(wireMockServer.port());
 
-		V1ServiceList SERVICE_LIST = new V1ServiceListBuilder()
+		V1ServiceList serviceList = new V1ServiceListBuilder()
 				.withMetadata(new V1ListMetaBuilder().withResourceVersion("1").build())
 				.addToItems(new V1ServiceBuilder()
 						.withMetadata(new V1ObjectMetaBuilder().withName("spring-cloud-kubernetes-configserver")
@@ -96,7 +96,7 @@ class KubernetesClientConfigServerBootstrapperTests {
 						.build())
 				.build();
 
-		V1EndpointsList ENDPOINTS_LIST = new V1EndpointsListBuilder()
+		V1EndpointsList endpointsList = new V1EndpointsListBuilder()
 				.withMetadata(new V1ListMetaBuilder().withResourceVersion("0").build())
 				.addToItems(new V1Endpoints()
 						.metadata(new V1ObjectMeta().name("spring-cloud-kubernetes-configserver").namespace("default"))
@@ -117,10 +117,10 @@ class KubernetesClientConfigServerBootstrapperTests {
 				.willReturn(aResponse().withStatus(200).withBody(objectMapper.writeValueAsString(environment))
 						.withHeader("content-type", "application/json")));
 		stubFor(get("/api/v1/namespaces/default/endpoints?resourceVersion=0&watch=false")
-				.willReturn(aResponse().withStatus(200).withBody(new JSON().serialize(ENDPOINTS_LIST))
+				.willReturn(aResponse().withStatus(200).withBody(new JSON().serialize(endpointsList))
 						.withHeader("content-type", "application/json")));
 		stubFor(get("/api/v1/namespaces/default/services?resourceVersion=0&watch=false")
-				.willReturn(aResponse().withStatus(200).withBody(new JSON().serialize(SERVICE_LIST))
+				.willReturn(aResponse().withStatus(200).withBody(new JSON().serialize(serviceList))
 						.withHeader("content-type", "application/json")));
 		stubFor(get(urlMatching("/api/v1/namespaces/default/services.*.watch=true"))
 				.willReturn(aResponse().withStatus(200)));
@@ -146,7 +146,7 @@ class KubernetesClientConfigServerBootstrapperTests {
 				.properties(addDefaultEnv(env));
 		ApiClient apiClient = new ClientBuilder().setBasePath("http://localhost:" + wireMockServer.port())
 				.setReadTimeout(Duration.ZERO).build();
-		builder.addBootstrapRegistryInitializer(registry -> registry.register(ApiClient.class, (context) -> apiClient));
+		builder.addBootstrapRegistryInitializer(registry -> registry.register(ApiClient.class, context -> apiClient));
 		builder.addBootstrapRegistryInitializer(new KubernetesClientConfigServerBootstrapper());
 		return builder;
 	}

@@ -172,7 +172,7 @@ class KubernetesClientEventBasedConfigMapChangeDetectorTests {
 	// This is needed when using JDK17 because GSON uses reflection to construct an
 	// OffsetDateTime but that constructor
 	// is protected.
-	public final static class GsonOffsetDateTimeAdapter extends TypeAdapter<OffsetDateTime> {
+	public static final class GsonOffsetDateTimeAdapter extends TypeAdapter<OffsetDateTime> {
 
 		@Override
 		public void write(JsonWriter jsonWriter, OffsetDateTime localDateTime) throws IOException {

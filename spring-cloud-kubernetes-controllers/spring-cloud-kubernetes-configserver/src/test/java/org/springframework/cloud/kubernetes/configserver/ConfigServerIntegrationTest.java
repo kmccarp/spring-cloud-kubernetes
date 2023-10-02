@@ -47,11 +47,11 @@ abstract class ConfigServerIntegrationTest {
 
 	@BeforeEach
 	public void beforeEach() {
-		V1ConfigMapList TEST_CONFIGMAP = new V1ConfigMapList().addItemsItem(new V1ConfigMapBuilder().withMetadata(
+		V1ConfigMapList testConfigmap = new V1ConfigMapList().addItemsItem(new V1ConfigMapBuilder().withMetadata(
 				new V1ObjectMetaBuilder().withName("test-cm").withNamespace("default").withResourceVersion("1").build())
 				.addToData("app.name", "test").build());
 
-		V1SecretList TEST_SECRET = new V1SecretListBuilder()
+		V1SecretList testSecret = new V1SecretListBuilder()
 				.withMetadata(new V1ListMetaBuilder().withResourceVersion("1").build())
 				.addToItems(new V1SecretBuilder()
 						.withMetadata(new V1ObjectMetaBuilder().withName("test-cm").withResourceVersion("0")
@@ -60,19 +60,19 @@ abstract class ConfigServerIntegrationTest {
 				.build();
 
 		WireMock.stubFor(get(urlMatching("^/api/v1/namespaces/default/configmaps.*"))
-				.willReturn(aResponse().withStatus(200).withBody(new JSON().serialize(TEST_CONFIGMAP))));
+				.willReturn(aResponse().withStatus(200).withBody(new JSON().serialize(testConfigmap))));
 
 		WireMock.stubFor(get(urlMatching("^/api/v1/namespaces/default/secrets.*"))
-				.willReturn(aResponse().withStatus(200).withBody(new JSON().serialize(TEST_SECRET))));
+				.willReturn(aResponse().withStatus(200).withBody(new JSON().serialize(testSecret))));
 	}
 
 	@Test
 	public void enabled() {
 		Environment env = testRestTemplate.getForObject("/test-cm/default", Environment.class);
 		assertThat(env.getPropertySources().size()).isEqualTo(2);
-		assertThat(env.getPropertySources().get(0).getName().equals("configmap.test-cm.default")).isTrue();
+		assertThat("configmap.test-cm.default".equals(env.getPropertySources().get(0).getName())).isTrue();
 		assertThat(env.getPropertySources().get(0).getSource().get("app.name")).isEqualTo("test");
-		assertThat(env.getPropertySources().get(1).getName().equals("secret.test-cm.default")).isTrue();
+		assertThat("secret.test-cm.default".equals(env.getPropertySources().get(1).getName())).isTrue();
 		assertThat(env.getPropertySources().get(1).getSource().get("password")).isEqualTo("p455w0rd");
 		assertThat(env.getPropertySources().get(1).getSource().get("username")).isEqualTo("user");
 	}

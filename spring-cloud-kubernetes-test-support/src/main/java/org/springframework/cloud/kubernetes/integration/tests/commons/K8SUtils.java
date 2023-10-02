@@ -144,9 +144,6 @@ public class K8SUtils {
 			reader = new BufferedReader(new InputStreamReader(url.openStream()));
 			yamlObj = Yaml.load(reader);
 		}
-		catch (Exception e) {
-			throw e;
-		}
 		finally {
 			if (reader != null) {
 				reader.close();

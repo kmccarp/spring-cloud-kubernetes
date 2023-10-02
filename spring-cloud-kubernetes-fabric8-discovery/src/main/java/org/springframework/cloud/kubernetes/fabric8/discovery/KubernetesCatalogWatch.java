@@ -52,7 +52,7 @@ public class KubernetesCatalogWatch implements ApplicationEventPublisherAware {
 
 	private Function<Fabric8CatalogWatchContext, List<EndpointNameAndNamespace>> stateGenerator;
 
-	private volatile List<EndpointNameAndNamespace> catalogEndpointsState = null;
+	private volatile List<EndpointNameAndNamespace> catalogEndpointsState;
 
 	private ApplicationEventPublisher publisher;
 

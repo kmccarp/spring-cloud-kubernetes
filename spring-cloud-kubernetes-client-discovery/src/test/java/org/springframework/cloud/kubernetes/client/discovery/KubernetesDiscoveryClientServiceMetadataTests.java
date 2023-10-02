@@ -226,7 +226,7 @@ class KubernetesDiscoveryClientServiceMetadataTests {
 
 	private String filterOnK8sNamespaceAndType(Map<String, String> result) {
 		return result.entrySet().stream().filter(en -> !en.getKey().contains("k8s_namespace"))
-				.filter(en -> !en.getKey().equals("type"))
+				.filter(en -> !"type".equals(en.getKey()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).toString();
 	}
 

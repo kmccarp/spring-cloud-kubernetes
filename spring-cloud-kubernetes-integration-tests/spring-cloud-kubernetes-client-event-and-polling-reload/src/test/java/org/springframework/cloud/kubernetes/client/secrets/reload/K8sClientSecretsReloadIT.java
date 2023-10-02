@@ -111,8 +111,8 @@ class K8sClientSecretsReloadIT {
 		WebClient secretClient = builder.baseUrl(PROPERTY_URL).build();
 
 		await().timeout(Duration.ofSeconds(120)).pollInterval(Duration.ofSeconds(2))
-				.until(() -> secretClient.method(HttpMethod.GET).retrieve().bodyToMono(String.class)
-						.retryWhen(retrySpec()).block().equals("initial"));
+				.until(() -> "initial".equals(secretClient.method(HttpMethod.GET).retrieve().bodyToMono(String.class)
+						.retryWhen(retrySpec()).block()));
 
 		V1Secret v1Secret = (V1Secret) util.yaml("secret.yaml");
 		Map<String, byte[]> secretData = v1Secret.getData();
@@ -121,8 +121,8 @@ class K8sClientSecretsReloadIT {
 		coreV1Api.replaceNamespacedSecret("event-reload", NAMESPACE, v1Secret, null, null, null, null);
 
 		await().timeout(Duration.ofSeconds(120)).pollInterval(Duration.ofSeconds(2))
-				.until(() -> secretClient.method(HttpMethod.GET).retrieve().bodyToMono(String.class)
-						.retryWhen(retrySpec()).block().equals("after-change"));
+				.until(() -> "after-change".equals(secretClient.method(HttpMethod.GET).retrieve().bodyToMono(String.class)
+						.retryWhen(retrySpec()).block()));
 	}
 
 	private void recreateSecret() {

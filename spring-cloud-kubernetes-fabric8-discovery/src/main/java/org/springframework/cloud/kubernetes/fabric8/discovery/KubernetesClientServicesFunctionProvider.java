@@ -35,7 +35,7 @@ public final class KubernetesClientServicesFunctionProvider {
 			Environment environment) {
 
 		if (properties.allNamespaces()) {
-			return (client) -> client.services().inAnyNamespace().withLabels(properties.serviceLabels());
+			return client -> client.services().inAnyNamespace().withLabels(properties.serviceLabels());
 		}
 
 		return client -> {
@@ -50,7 +50,7 @@ public final class KubernetesClientServicesFunctionProvider {
 			Binder binder, BindHandler bindHandler) {
 
 		if (properties.allNamespaces()) {
-			return (client) -> client.services().inAnyNamespace().withLabels(properties.serviceLabels());
+			return client -> client.services().inAnyNamespace().withLabels(properties.serviceLabels());
 		}
 
 		return client -> {

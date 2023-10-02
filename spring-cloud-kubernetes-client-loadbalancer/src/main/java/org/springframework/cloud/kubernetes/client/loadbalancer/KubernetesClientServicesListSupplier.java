@@ -41,11 +41,11 @@ public class KubernetesClientServicesListSupplier extends KubernetesServicesList
 
 	private static final Log LOG = LogFactory.getLog(KubernetesClientServicesListSupplier.class);
 
-	private CoreV1Api coreV1Api;
+    private final CoreV1Api coreV1Api;
 
 	private KubernetesClientProperties kubernetesClientProperties;
 
-	private KubernetesNamespaceProvider kubernetesNamespaceProvider;
+    private final KubernetesNamespaceProvider kubernetesNamespaceProvider;
 
 	public KubernetesClientServicesListSupplier(Environment environment, KubernetesServiceInstanceMapper mapper,
 			KubernetesDiscoveryProperties discoveryProperties, CoreV1Api coreV1Api,

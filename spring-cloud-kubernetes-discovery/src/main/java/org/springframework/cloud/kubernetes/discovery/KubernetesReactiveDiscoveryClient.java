@@ -29,7 +29,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 public class KubernetesReactiveDiscoveryClient implements ReactiveDiscoveryClient {
 
-	private WebClient webClient;
+    private final WebClient webClient;
 
 	public KubernetesReactiveDiscoveryClient(WebClient.Builder webClientBuilder,
 			KubernetesDiscoveryClientProperties properties) {
@@ -55,7 +55,7 @@ public class KubernetesReactiveDiscoveryClient implements ReactiveDiscoveryClien
 	@Cacheable("services")
 	public Flux<String> getServices() {
 		return webClient.get().uri("/apps").exchangeToFlux(
-				clientResponse -> clientResponse.bodyToFlux(Service.class).map(service -> service.getName()));
+				clientResponse -> clientResponse.bodyToFlux(Service.class).map(Service::getName));
 	}
 
 }

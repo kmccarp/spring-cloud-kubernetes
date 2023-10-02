@@ -25,7 +25,7 @@ import org.springframework.cloud.client.ServiceInstance;
  *
  * {@link ServiceInstance} with additional methods, specific to kubernetes.
  */
-sealed public interface KubernetesServiceInstance extends ServiceInstance permits DefaultKubernetesServiceInstance {
+public sealed interface KubernetesServiceInstance extends ServiceInstance permits DefaultKubernetesServiceInstance {
 
 	String getNamespace();
 
