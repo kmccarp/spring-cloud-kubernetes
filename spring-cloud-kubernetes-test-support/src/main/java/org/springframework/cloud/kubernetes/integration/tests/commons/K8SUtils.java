@@ -144,9 +144,6 @@ public class K8SUtils {
 			reader = new BufferedReader(new InputStreamReader(url.openStream()));
 			yamlObj = Yaml.load(reader);
 		}
-		catch (Exception e) {
-			throw e;
-		}
 		finally {
 			if (reader != null) {
 				reader.close();
@@ -201,7 +198,7 @@ public class K8SUtils {
 			fail("no endpoints for " + name);
 		}
 		V1Endpoints endpoint = endpoints.getItems().get(0);
-		return endpoint.getSubsets().get(0).getAddresses().size() >= 1;
+		return !endpoint.getSubsets().get(0).getAddresses().isEmpty();
 	}
 
 	public void waitForReplicationController(String name, String namespace) {
@@ -212,7 +209,7 @@ public class K8SUtils {
 	public boolean isReplicationControllerReady(String name, String namespace) throws ApiException {
 		V1ReplicationControllerList controllerList = api.listNamespacedReplicationController(namespace, null, null,
 				null, "metadata.name=" + name, null, null, null, null, null, null);
-		if (controllerList.getItems().size() < 1) {
+		if (controllerList.getItems().isEmpty()) {
 			fail("Replication controller with name " + name + "could not be found");
 		}
 
@@ -281,7 +278,7 @@ public class K8SUtils {
 	public boolean isDeploymentReady(String deploymentName, String namespace) throws ApiException {
 		V1DeploymentList deployments = appsApi.listNamespacedDeployment(namespace, null, null, null,
 				"metadata.name=" + deploymentName, null, null, null, null, null, null);
-		if (deployments.getItems().size() < 1) {
+		if (deployments.getItems().isEmpty()) {
 			fail("No deployments with the name " + deploymentName);
 		}
 		V1Deployment deployment = deployments.getItems().get(0);

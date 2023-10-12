@@ -68,11 +68,11 @@ class ConfigServerBootstrapperTests {
 		wireMockServer = new WireMockServer(options().dynamicPort());
 		wireMockServer.start();
 		WireMock.configureFor(wireMockServer.port());
-		String APPS_NAME = "[{\"instanceId\":\"uid2\",\"serviceId\":\"spring-cloud-kubernetes-configserver\",\"host\":\"localhost\",\"port\":"
+		String appsName = "[{\"instanceId\":\"uid2\",\"serviceId\":\"spring-cloud-kubernetes-configserver\",\"host\":\"localhost\",\"port\":"
 				+ wireMockServer.port() + ",\"uri\":\"" + wireMockServer.baseUrl()
 				+ "\",\"secure\":false,\"metadata\":{\"spring\":\"true\",\"http\":\"8080\",\"k8s\":\"true\"},\"namespace\":\"namespace1\",\"cluster\":null,\"scheme\":\"http\"}]";
 		stubFor(get("/apps/spring-cloud-kubernetes-configserver").willReturn(
-				aResponse().withStatus(200).withBody(APPS_NAME).withHeader("content-type", "application/json")));
+				aResponse().withStatus(200).withBody(appsName).withHeader("content-type", "application/json")));
 		Environment environment = new Environment("test", "default");
 		Map<String, Object> properties = new HashMap<>();
 		properties.put("hello", "world");

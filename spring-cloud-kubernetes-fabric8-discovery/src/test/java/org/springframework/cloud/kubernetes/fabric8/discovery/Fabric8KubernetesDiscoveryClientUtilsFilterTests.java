@@ -182,7 +182,7 @@ class Fabric8KubernetesDiscoveryClientUtilsFilterTests {
 		createService("a", "namespace-a");
 
 		List<Endpoints> result = Fabric8KubernetesDiscoveryClientUtils.withFilter(List.of(endpointsA), PROPERTIES,
-				client, x -> x.getMetadata().getNamespace().equals("namespace-a"));
+				client, x -> "namespace-a".equals(x.getMetadata().getNamespace()));
 		Assertions.assertEquals(result.size(), 1);
 		Assertions.assertEquals(result.get(0).getMetadata().getName(), "a");
 		Assertions.assertEquals(result.get(0).getMetadata().getNamespace(), "namespace-a");

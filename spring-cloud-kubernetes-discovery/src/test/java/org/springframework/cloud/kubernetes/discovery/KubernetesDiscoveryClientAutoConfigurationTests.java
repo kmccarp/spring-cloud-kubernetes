@@ -34,9 +34,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class KubernetesDiscoveryClientAutoConfigurationTests {
 
-	private ApplicationContextRunner contextRunner = new ApplicationContextRunner()
-			.withConfiguration(AutoConfigurations.of(UtilAutoConfiguration.class,
-					ReactiveCommonsClientAutoConfiguration.class, KubernetesDiscoveryClientAutoConfiguration.class));
+    private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
+            .withConfiguration(AutoConfigurations.of(UtilAutoConfiguration.class,
+                    ReactiveCommonsClientAutoConfiguration.class, KubernetesDiscoveryClientAutoConfiguration.class));
 
 	@Test
 	public void shouldWorkWithDefaults() {

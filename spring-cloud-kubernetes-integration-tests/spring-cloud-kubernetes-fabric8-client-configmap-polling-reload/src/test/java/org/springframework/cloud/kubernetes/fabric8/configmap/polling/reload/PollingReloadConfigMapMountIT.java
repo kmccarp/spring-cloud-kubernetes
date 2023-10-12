@@ -120,8 +120,8 @@ class PollingReloadConfigMapMountIT {
 		configMap.setData(Map.of("application.properties", "from.properties.key=as-mount-changed"));
 		client.configMaps().inNamespace("default").resource(configMap).createOrReplace();
 
-		await().timeout(Duration.ofSeconds(360)).until(() -> webClient.method(HttpMethod.GET).retrieve()
-				.bodyToMono(String.class).retryWhen(retrySpec()).block().equals("as-mount-changed"));
+		await().timeout(Duration.ofSeconds(360)).until(() -> "as-mount-changed".equals(webClient.method(HttpMethod.GET).retrieve()
+				.bodyToMono(String.class).retryWhen(retrySpec()).block()));
 
 	}
 

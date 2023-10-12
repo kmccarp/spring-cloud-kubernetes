@@ -67,7 +67,7 @@ class KubernetesClientConfigServerBootstrapper extends KubernetesConfigServerBoo
 		registry.registerIfAbsent(ConfigServerInstanceProvider.Function.class, KubernetesFunction::create);
 	}
 
-	final static class KubernetesFunction implements ConfigServerInstanceProvider.Function {
+	static final class KubernetesFunction implements ConfigServerInstanceProvider.Function {
 
 		private final BootstrapContext context;
 
@@ -137,7 +137,7 @@ class KubernetesClientConfigServerBootstrapper extends KubernetesConfigServerBoo
 					if (log != null) {
 						log.warn("Error initiating informer discovery client", e);
 					}
-					return (serviceId) -> Collections.emptyList();
+					return serviceId -> Collections.emptyList();
 				}
 				finally {
 					sharedInformerFactory.stopAllRegisteredInformers();

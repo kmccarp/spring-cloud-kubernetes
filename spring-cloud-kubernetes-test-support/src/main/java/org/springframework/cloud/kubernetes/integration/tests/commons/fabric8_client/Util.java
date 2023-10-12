@@ -344,7 +344,7 @@ public final class Util {
 		Deployment deployment = client.apps().deployments().inNamespace(namespace).withName(deploymentName).get();
 
 		Integer availableReplicas = deployment.getStatus().getAvailableReplicas();
-		LOG.info("Available replicas for " + deploymentName + ": " + ((availableReplicas == null) ? 0 : 1));
+		LOG.info("Available replicas for " + deploymentName + ": " + (availableReplicas == null ? 0 : 1));
 		return availableReplicas != null && availableReplicas >= 1;
 	}
 
