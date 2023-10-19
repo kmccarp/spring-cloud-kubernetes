@@ -61,27 +61,27 @@ class Fabric8IstioIT {
 
 	private static Util util;
 
-	private static K3sContainer K3S;
+	private static K3sContainer k3s;
 
 	@BeforeAll
 	static void beforeAll() throws Exception {
-		K3S = Commons.container();
-		K3S.start();
-		util = new Util(K3S);
+		k3s = Commons.container();
+		k3s.start();
+		util = new Util(k3s);
 		client = util.client();
-		Commons.validateImage(IMAGE_NAME, K3S);
-		Commons.loadSpringCloudKubernetesImage(IMAGE_NAME, K3S);
+		Commons.validateImage(IMAGE_NAME, k3s);
+		Commons.loadSpringCloudKubernetesImage(IMAGE_NAME, k3s);
 
-		Commons.pullImage(ISTIO_PROXY, Commons.ISTIO_VERSION, K3S);
-		Commons.loadImage(ISTIO_PROXY, Commons.ISTIO_VERSION, "istioproxy", K3S);
-		Commons.pullImage(ISTIO_PILOT, Commons.ISTIO_VERSION, K3S);
-		Commons.loadImage(ISTIO_PILOT, Commons.ISTIO_VERSION, "istiopilot", K3S);
+		Commons.pullImage(ISTIO_PROXY, Commons.ISTIO_VERSION, k3s);
+		Commons.loadImage(ISTIO_PROXY, Commons.ISTIO_VERSION, "istioproxy", k3s);
+		Commons.pullImage(ISTIO_PILOT, Commons.ISTIO_VERSION, k3s);
+		Commons.loadImage(ISTIO_PILOT, Commons.ISTIO_VERSION, "istiopilot", k3s);
 
-		processExecResult(K3S.execInContainer("sh", "-c", "kubectl create namespace istio-test"));
+		processExecResult(k3s.execInContainer("sh", "-c", "kubectl create namespace istio-test"));
 		processExecResult(
-				K3S.execInContainer("sh", "-c", "kubectl label namespace istio-test istio-injection=enabled"));
+				k3s.execInContainer("sh", "-c", "kubectl label namespace istio-test istio-injection=enabled"));
 
-		processExecResult(K3S.execInContainer("sh", "-c",
+		processExecResult(k3s.execInContainer("sh", "-c",
 				"/tmp/istioctl" + " --kubeconfig=/etc/rancher/k3s/k3s.yaml install --set profile=minimal -y"));
 
 		util.setUpIstio(NAMESPACE);
@@ -91,7 +91,7 @@ class Fabric8IstioIT {
 
 	@AfterAll
 	static void afterAll() throws Exception {
-		Commons.cleanUp(IMAGE_NAME, K3S);
+		Commons.cleanUp(IMAGE_NAME, k3s);
 		Commons.systemPrune();
 	}
 

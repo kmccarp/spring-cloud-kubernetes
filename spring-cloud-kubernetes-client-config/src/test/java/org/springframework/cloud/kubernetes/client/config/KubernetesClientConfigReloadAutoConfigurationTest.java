@@ -79,7 +79,7 @@ public class KubernetesClientConfigReloadAutoConfigurationTest {
 	public static WireMockServer wireMockServer;
 
 	protected void setup(String... env) {
-		List<String> envList = (env != null) ? new ArrayList<>(Arrays.asList(env)) : new ArrayList<>();
+		List<String> envList = env != null ? new ArrayList<>(Arrays.asList(env)) : new ArrayList<>();
 		envList.add("spring.cloud.kubernetes.client.namespace=default");
 		String[] envArray = envList.toArray(new String[0]);
 
@@ -109,12 +109,12 @@ public class KubernetesClientConfigReloadAutoConfigurationTest {
 
 	@BeforeEach
 	void beforeEach() {
-		V1ConfigMapList TEST_CONFIGMAP = new V1ConfigMapList().addItemsItem(new V1ConfigMapBuilder().withMetadata(
+		V1ConfigMapList testConfigmap = new V1ConfigMapList().addItemsItem(new V1ConfigMapBuilder().withMetadata(
 				new V1ObjectMetaBuilder().withName("test-cm").withNamespace("default").withResourceVersion("1").build())
 				.addToData("app.name", "test").build());
 
 		WireMock.stubFor(get(urlMatching("^/api/v1/namespaces/default/configmaps.*"))
-				.willReturn(aResponse().withStatus(200).withBody(new JSON().serialize(TEST_CONFIGMAP))));
+				.willReturn(aResponse().withStatus(200).withBody(new JSON().serialize(testConfigmap))));
 	}
 
 	// 1. watchers

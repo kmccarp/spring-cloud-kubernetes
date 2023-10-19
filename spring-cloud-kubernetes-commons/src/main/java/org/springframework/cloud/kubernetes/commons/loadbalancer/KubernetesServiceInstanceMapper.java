@@ -38,14 +38,14 @@ public interface KubernetesServiceInstanceMapper<T> {
 			Integer servicePort) {
 		if (labels != null) {
 			final String securedLabelValue = labels.getOrDefault("secured", "false");
-			if (securedLabelValue.equals("true")) {
+			if ("true".equals(securedLabelValue)) {
 				return true;
 			}
 		}
 
 		if (annotations != null) {
 			final String securedAnnotationValue = annotations.getOrDefault("secured", "false");
-			if (securedAnnotationValue.equals("true")) {
+			if ("true".equals(securedAnnotationValue)) {
 				return true;
 			}
 		}

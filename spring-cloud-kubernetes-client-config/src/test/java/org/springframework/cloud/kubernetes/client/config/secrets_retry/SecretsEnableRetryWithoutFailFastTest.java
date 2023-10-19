@@ -97,7 +97,7 @@ public class SecretsEnableRetryWithoutFailFastTest {
 	}
 
 	protected void setup(String... env) {
-		List<String> envList = (env != null) ? new ArrayList<>(Arrays.asList(env)) : new ArrayList<>();
+		List<String> envList = env != null ? new ArrayList<>(Arrays.asList(env)) : new ArrayList<>();
 		envList.add("spring.cloud.kubernetes.client.namespace=default");
 		String[] envArray = envList.toArray(new String[0]);
 

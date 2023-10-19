@@ -101,8 +101,8 @@ class ConfigMapPollingReloadIT {
 
 		client.configMaps().inNamespace("default").resource(map).createOrReplace();
 
-		await().timeout(Duration.ofSeconds(60)).until(() -> webClient.method(HttpMethod.GET).retrieve()
-				.bodyToMono(String.class).retryWhen(retrySpec()).block().equals("after-change"));
+		await().timeout(Duration.ofSeconds(60)).until(() -> "after-change".equals(webClient.method(HttpMethod.GET).retrieve()
+				.bodyToMono(String.class).retryWhen(retrySpec()).block()));
 
 	}
 

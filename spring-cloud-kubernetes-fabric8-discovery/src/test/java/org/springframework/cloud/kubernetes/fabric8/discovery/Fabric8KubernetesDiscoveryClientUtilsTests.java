@@ -279,7 +279,7 @@ class Fabric8KubernetesDiscoveryClientUtilsTests {
 				true, 60L, false, "", Set.of(), Map.of(), "", null, 0, false);
 
 		List<Service> result = services(properties, client, namespaceProvider("test"),
-				x -> x.getSpec().getType().equals("ExternalName"), Map.of(), "fabric8-discovery");
+				x -> "ExternalName".equals(x.getSpec().getType()), Map.of(), "fabric8-discovery");
 		Assertions.assertEquals(result.size(), 1);
 		Assertions.assertEquals(result.get(0).getMetadata().getName(), "external-name-service");
 	}

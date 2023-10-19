@@ -134,7 +134,7 @@ final class KubernetesClientCatalogWatchNamespacesDelegate {
 
 			// there is no update to receive anymore, as there is nothing in namespacea
 			// and namespaceb
-			return result.size() == 0;
+			return result.isEmpty();
 		});
 
 	}

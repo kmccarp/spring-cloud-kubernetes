@@ -32,7 +32,7 @@ public class ConfigWatcherTestApplication implements ApplicationListener<Refresh
 
 	protected Log log = LogFactory.getLog(getClass());
 
-	private boolean value = false;
+	private boolean value;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConfigWatcherTestApplication.class, args);

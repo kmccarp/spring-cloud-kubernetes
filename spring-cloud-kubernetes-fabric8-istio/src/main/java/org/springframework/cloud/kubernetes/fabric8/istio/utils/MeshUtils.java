@@ -35,7 +35,7 @@ public class MeshUtils {
 
 	private final IstioClientProperties istioClientProperties;
 
-	private RestTemplate restTemplate = new RestTemplateBuilder().build();
+	private final RestTemplate restTemplate = new RestTemplateBuilder().build();
 
 	public MeshUtils(IstioClientProperties istioClientProperties) {
 		this.istioClientProperties = istioClientProperties;

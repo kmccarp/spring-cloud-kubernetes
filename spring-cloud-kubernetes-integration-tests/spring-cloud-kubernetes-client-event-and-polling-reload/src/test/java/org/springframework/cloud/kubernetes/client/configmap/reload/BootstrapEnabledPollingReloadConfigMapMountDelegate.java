@@ -82,8 +82,8 @@ final class BootstrapEnabledPollingReloadConfigMapMountDelegate {
 				null);
 
 		await().timeout(Duration.ofSeconds(180))
-				.until(() -> webClient.method(HttpMethod.GET).retrieve().bodyToMono(String.class)
-						.retryWhen(K8sClientConfigMapReloadITUtil.retrySpec()).block().equals("as-mount-changed"));
+				.until(() -> "as-mount-changed".equals(webClient.method(HttpMethod.GET).retrieve().bodyToMono(String.class)
+						.retryWhen(K8sClientConfigMapReloadITUtil.retrySpec()).block()));
 
 	}
 

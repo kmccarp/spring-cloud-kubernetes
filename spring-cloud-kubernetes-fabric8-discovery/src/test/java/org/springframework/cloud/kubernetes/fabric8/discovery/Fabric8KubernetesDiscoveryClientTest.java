@@ -88,8 +88,8 @@ class Fabric8KubernetesDiscoveryClientTest {
 
 		List<ServiceInstance> instances = discoveryClient.getInstances("endpoint");
 
-		assertThat(instances).hasSize(1).filteredOn(s -> s.getHost().equals("ip1") && !s.isSecure()).hasSize(1)
-				.filteredOn(s -> s.getInstanceId().equals("10")).hasSize(1);
+		assertThat(instances).hasSize(1).filteredOn(s -> "ip1".equals(s.getHost()) && !s.isSecure()).hasSize(1)
+				.filteredOn(s -> "10".equals(s.getInstanceId())).hasSize(1);
 	}
 
 	@Test
@@ -117,8 +117,8 @@ class Fabric8KubernetesDiscoveryClientTest {
 
 		List<ServiceInstance> instances = discoveryClient.getInstances("endpoint");
 
-		assertThat(instances).hasSize(1).filteredOn(s -> s.getHost().equals("ip1") && !s.isSecure()).hasSize(1)
-				.filteredOn(s -> s.getInstanceId().equals("20")).hasSize(1).filteredOn(s -> 80 == s.getPort())
+		assertThat(instances).hasSize(1).filteredOn(s -> "ip1".equals(s.getHost()) && !s.isSecure()).hasSize(1)
+				.filteredOn(s -> "20".equals(s.getInstanceId())).hasSize(1).filteredOn(s -> 80 == s.getPort())
 				.hasSize(1);
 	}
 
@@ -140,9 +140,9 @@ class Fabric8KubernetesDiscoveryClientTest {
 				KubernetesDiscoveryProperties.DEFAULT, KubernetesClient::services, null,
 				new ServicePortSecureResolver(KubernetesDiscoveryProperties.DEFAULT));
 
-		List<Endpoints> result_endpoints = discoveryClient.getEndPointsList("endpoint");
+		List<Endpoints> resultEndpoints = discoveryClient.getEndPointsList("endpoint");
 
-		assertThat(result_endpoints).hasSize(1);
+		assertThat(resultEndpoints).hasSize(1);
 	}
 
 	@Test
@@ -172,9 +172,9 @@ class Fabric8KubernetesDiscoveryClientTest {
 		KubernetesDiscoveryClient discoveryClient = new KubernetesDiscoveryClient(mockClient, properties,
 				KubernetesClient::services, x -> true, new ServicePortSecureResolver(properties));
 
-		List<Endpoints> result_endpoints = discoveryClient.getEndPointsList("endpoint");
+		List<Endpoints> resultEndpoints = discoveryClient.getEndPointsList("endpoint");
 
-		assertThat(result_endpoints).hasSize(2);
+		assertThat(resultEndpoints).hasSize(2);
 	}
 
 	@Test
@@ -212,10 +212,10 @@ class Fabric8KubernetesDiscoveryClientTest {
 		KubernetesDiscoveryClient discoveryClient = new KubernetesDiscoveryClient(mockClient, properties,
 				KubernetesClient::services, null, new ServicePortSecureResolver(properties));
 
-		List<Endpoints> result_endpoints = discoveryClient.getEndPointsList("endpoint");
+		List<Endpoints> resultEndpoints = discoveryClient.getEndPointsList("endpoint");
 
-		assertThat(result_endpoints).hasSize(2);
-		assertThat(result_endpoints.stream().map(Endpoints::getMetadata).map(ObjectMeta::getNamespace)
+		assertThat(resultEndpoints).hasSize(2);
+		assertThat(resultEndpoints.stream().map(Endpoints::getMetadata).map(ObjectMeta::getNamespace)
 				.collect(Collectors.toList())).containsOnly(namespace1, namespace3);
 	}
 
@@ -364,14 +364,14 @@ class Fabric8KubernetesDiscoveryClientTest {
 		List<ServiceInstance> instances = discoveryClient.getInstances("endpoint");
 
 		assertThat(instances).hasSize(2);
-		assertThat(instances).filteredOn(s -> s.getHost().equals("ip1") && !s.isSecure()).hasSize(1);
-		assertThat(instances).filteredOn(s -> s.getHost().equals("ip2") && !s.isSecure()).hasSize(1);
+		assertThat(instances).filteredOn(s -> "ip1".equals(s.getHost()) && !s.isSecure()).hasSize(1);
+		assertThat(instances).filteredOn(s -> "ip2".equals(s.getHost()) && !s.isSecure()).hasSize(1);
 		assertThat(instances).filteredOn(s -> s.getServiceId().contains("endpoint")
-				&& ((KubernetesServiceInstance) s).getNamespace().equals("test")).hasSize(1);
+				&& "test".equals(((KubernetesServiceInstance) s).getNamespace())).hasSize(1);
 		assertThat(instances).filteredOn(s -> s.getServiceId().contains("endpoint")
-				&& ((KubernetesServiceInstance) s).getNamespace().equals("test2")).hasSize(1);
-		assertThat(instances).filteredOn(s -> s.getInstanceId().equals("60")).hasSize(1);
-		assertThat(instances).filteredOn(s -> s.getInstanceId().equals("70")).hasSize(1);
+				&& "test2".equals(((KubernetesServiceInstance) s).getNamespace())).hasSize(1);
+		assertThat(instances).filteredOn(s -> "60".equals(s.getInstanceId())).hasSize(1);
+		assertThat(instances).filteredOn(s -> "70".equals(s.getInstanceId())).hasSize(1);
 	}
 
 	@Test
@@ -415,8 +415,8 @@ class Fabric8KubernetesDiscoveryClientTest {
 
 		List<ServiceInstance> instances = discoveryClient.getInstances("endpoint2");
 
-		assertThat(instances).hasSize(1).filteredOn(s -> s.getHost().equals("ip1") && s.isSecure()).hasSize(1)
-				.filteredOn(s -> s.getInstanceId().equals("80")).hasSize(1).filteredOn(s -> 443 == s.getPort())
+		assertThat(instances).hasSize(1).filteredOn(s -> "ip1".equals(s.getHost()) && s.isSecure()).hasSize(1)
+				.filteredOn(s -> "80".equals(s.getInstanceId())).hasSize(1).filteredOn(s -> 443 == s.getPort())
 				.hasSize(1);
 	}
 
@@ -446,8 +446,8 @@ class Fabric8KubernetesDiscoveryClientTest {
 
 		List<ServiceInstance> instances = discoveryClient.getInstances("endpoint3");
 
-		assertThat(instances).hasSize(1).filteredOn(s -> s.getHost().equals("ip1") && s.isSecure()).hasSize(1)
-				.filteredOn(s -> s.getInstanceId().equals("90")).hasSize(1).hasSize(1);
+		assertThat(instances).hasSize(1).filteredOn(s -> "ip1".equals(s.getHost()) && s.isSecure()).hasSize(1)
+				.filteredOn(s -> "90".equals(s.getInstanceId())).hasSize(1).hasSize(1);
 	}
 
 	@Test
@@ -476,8 +476,8 @@ class Fabric8KubernetesDiscoveryClientTest {
 
 		List<ServiceInstance> instances = discoveryClient.getInstances("endpoint4");
 
-		assertThat(instances).hasSize(1).filteredOn(s -> s.getHost().equals("ip1") && s.isSecure()).hasSize(1)
-				.filteredOn(s -> s.getInstanceId().equals("100")).hasSize(1).hasSize(1);
+		assertThat(instances).hasSize(1).filteredOn(s -> "ip1".equals(s.getHost()) && s.isSecure()).hasSize(1)
+				.filteredOn(s -> "100".equals(s.getInstanceId())).hasSize(1).hasSize(1);
 	}
 
 	@Test
@@ -505,8 +505,8 @@ class Fabric8KubernetesDiscoveryClientTest {
 
 		List<ServiceInstance> instances = discoveryClient.getInstances("endpoint5");
 
-		assertThat(instances).hasSize(1).filteredOn(s -> s.getHost().equals("ip1") && s.isSecure()).hasSize(1)
-				.filteredOn(s -> s.getInstanceId().equals("110")).hasSize(1).filteredOn(s -> 443 == s.getPort())
+		assertThat(instances).hasSize(1).filteredOn(s -> "ip1".equals(s.getHost()) && s.isSecure()).hasSize(1)
+				.filteredOn(s -> "110".equals(s.getInstanceId())).hasSize(1).filteredOn(s -> 443 == s.getPort())
 				.hasSize(1);
 	}
 
@@ -533,8 +533,8 @@ class Fabric8KubernetesDiscoveryClientTest {
 
 		List<ServiceInstance> instances = discoveryClient.getInstances("endpoint5");
 
-		assertThat(instances).hasSize(1).filteredOn(s -> s.getHost().equals("ip1") && !s.isSecure()).hasSize(1)
-				.filteredOn(s -> s.getInstanceId().equals("120")).hasSize(1).filteredOn(s -> 80 == s.getPort())
+		assertThat(instances).hasSize(1).filteredOn(s -> "ip1".equals(s.getHost()) && !s.isSecure()).hasSize(1)
+				.filteredOn(s -> "120".equals(s.getInstanceId())).hasSize(1).filteredOn(s -> 80 == s.getPort())
 				.hasSize(1);
 	}
 
@@ -564,8 +564,8 @@ class Fabric8KubernetesDiscoveryClientTest {
 		List<ServiceInstance> instances = discoveryClient.getInstances("endpoint5");
 
 		// We're returning the first discovered port to not change previous behaviour
-		assertThat(instances).hasSize(1).filteredOn(s -> s.getHost().equals("ip1") && s.isSecure()).hasSize(1)
-				.filteredOn(s -> s.getInstanceId().equals("130")).hasSize(1).filteredOn(s -> 443 == s.getPort())
+		assertThat(instances).hasSize(1).filteredOn(s -> "ip1".equals(s.getHost()) && s.isSecure()).hasSize(1)
+				.filteredOn(s -> "130".equals(s.getInstanceId())).hasSize(1).filteredOn(s -> 443 == s.getPort())
 				.hasSize(1);
 	}
 
@@ -593,9 +593,9 @@ class Fabric8KubernetesDiscoveryClientTest {
 		final List<ServiceInstance> instances = discoveryClient.getInstances("endpoint5");
 
 		// We're returning the first discovered port to not change previous behaviour
-		assertThat(instances).hasSize(1).filteredOn(s -> s.getHost().equals("ip1") && !s.isSecure()).hasSize(1)
-				.filteredOn(s -> s.getUri().toASCIIString().equals("http://ip1"))
-				.filteredOn(s -> s.getInstanceId().equals("130")).hasSize(1).filteredOn(s -> 0 == s.getPort())
+		assertThat(instances).hasSize(1).filteredOn(s -> "ip1".equals(s.getHost()) && !s.isSecure()).hasSize(1)
+				.filteredOn(s -> "http://ip1".equals(s.getUri().toASCIIString()))
+				.filteredOn(s -> "130".equals(s.getInstanceId())).hasSize(1).filteredOn(s -> 0 == s.getPort())
 				.hasSize(1);
 	}
 

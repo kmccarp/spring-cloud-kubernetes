@@ -34,7 +34,7 @@ public class KubernetesMockEnvironment extends AbstractEnvironment {
 
 	private PropertySource propertySource = mock(KubernetesClientSecretsPropertySource.class);
 
-	private Map<String, Object> map = new HashMap<>();
+	private final Map<String, Object> map = new HashMap<>();
 
 	public KubernetesMockEnvironment(PropertySource mockPropertySource) {
 		this.propertySource = mockPropertySource;

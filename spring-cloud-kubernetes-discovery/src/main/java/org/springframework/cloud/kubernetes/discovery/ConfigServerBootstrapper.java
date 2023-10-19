@@ -52,7 +52,7 @@ class ConfigServerBootstrapper extends KubernetesConfigServerBootstrapper {
 		registry.registerIfAbsent(ConfigServerInstanceProvider.Function.class, KubernetesFunction::create);
 	}
 
-	final static class KubernetesFunction implements ConfigServerInstanceProvider.Function {
+	static final class KubernetesFunction implements ConfigServerInstanceProvider.Function {
 
 		private final BootstrapContext context;
 

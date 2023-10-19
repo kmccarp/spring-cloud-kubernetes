@@ -155,7 +155,7 @@ public class KubernetesInformerDiscoveryClient implements DiscoveryClient {
 
 		return endpoints.stream()
 				.flatMap(ep -> ep.getSubsets().stream()
-						.filter(subset -> subset.getPorts() != null && subset.getPorts().size() > 0) // safeguard
+						.filter(subset -> subset.getPorts() != null && !subset.getPorts().isEmpty()) // safeguard
 						.flatMap(subset -> {
 							Map<String, String> metadata = new HashMap<>(serviceMetadata);
 							List<CoreV1EndpointPort> endpointPorts = subset.getPorts();

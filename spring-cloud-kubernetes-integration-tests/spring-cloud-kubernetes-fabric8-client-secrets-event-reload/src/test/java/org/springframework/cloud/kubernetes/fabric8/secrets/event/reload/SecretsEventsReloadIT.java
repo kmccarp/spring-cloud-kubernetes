@@ -106,8 +106,8 @@ class SecretsEventsReloadIT {
 
 		client.secrets().inNamespace("default").resource(secret).createOrReplace();
 
-		await().timeout(Duration.ofSeconds(120)).until(() -> webClient.method(HttpMethod.GET).retrieve()
-				.bodyToMono(String.class).retryWhen(retrySpec()).block().equals("after-change"));
+		await().timeout(Duration.ofSeconds(120)).until(() -> "after-change".equals(webClient.method(HttpMethod.GET).retrieve()
+				.bodyToMono(String.class).retryWhen(retrySpec()).block()));
 
 		manifests(Phase.DELETE, false);
 	}
@@ -134,8 +134,8 @@ class SecretsEventsReloadIT {
 
 		client.secrets().inNamespace("default").resource(secret).createOrReplace();
 
-		await().timeout(Duration.ofSeconds(120)).until(() -> webClient.method(HttpMethod.GET).retrieve()
-				.bodyToMono(String.class).retryWhen(retrySpec()).block().equals("after-change"));
+		await().timeout(Duration.ofSeconds(120)).until(() -> "after-change".equals(webClient.method(HttpMethod.GET).retrieve()
+				.bodyToMono(String.class).retryWhen(retrySpec()).block()));
 
 		manifests(Phase.DELETE, true);
 

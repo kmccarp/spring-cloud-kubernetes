@@ -36,11 +36,11 @@ public class KubernetesEnvironmentRepository implements EnvironmentRepository {
 
 	private static final Log LOG = LogFactory.getLog(KubernetesEnvironmentRepository.class);
 
-	private CoreV1Api coreApi;
+	private final CoreV1Api coreApi;
 
-	private List<KubernetesPropertySourceSupplier> kubernetesPropertySourceSuppliers;
+	private final List<KubernetesPropertySourceSupplier> kubernetesPropertySourceSuppliers;
 
-	private String namespace;
+	private final String namespace;
 
 	public KubernetesEnvironmentRepository(CoreV1Api coreApi,
 			List<KubernetesPropertySourceSupplier> kubernetesPropertySourceSuppliers, String namespace) {

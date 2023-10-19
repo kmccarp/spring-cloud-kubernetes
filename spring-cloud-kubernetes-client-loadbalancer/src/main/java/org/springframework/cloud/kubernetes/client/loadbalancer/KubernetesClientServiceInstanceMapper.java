@@ -37,9 +37,9 @@ import org.springframework.util.StringUtils;
  */
 public class KubernetesClientServiceInstanceMapper implements KubernetesServiceInstanceMapper<V1Service> {
 
-	private KubernetesLoadBalancerProperties properties;
+	private final KubernetesLoadBalancerProperties properties;
 
-	private KubernetesDiscoveryProperties discoveryProperties;
+	private final KubernetesDiscoveryProperties discoveryProperties;
 
 	public KubernetesClientServiceInstanceMapper(KubernetesLoadBalancerProperties properties,
 			KubernetesDiscoveryProperties discoveryProperties) {

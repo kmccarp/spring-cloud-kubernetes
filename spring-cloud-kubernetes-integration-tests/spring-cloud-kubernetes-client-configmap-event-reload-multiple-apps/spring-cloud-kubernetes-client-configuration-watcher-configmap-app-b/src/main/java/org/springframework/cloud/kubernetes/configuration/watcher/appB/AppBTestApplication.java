@@ -33,9 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AppBTestApplication implements ApplicationListener<RefreshRemoteApplicationEvent> {
 
-	private final Log LOG = LogFactory.getLog(getClass());
+	private static final Log LOG = LogFactory.getLog(getClass());
 
-	private boolean value = false;
+	private boolean value;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppBTestApplication.class, args);
